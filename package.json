@@ -7,7 +7,11 @@
     "node": "18.x"
   },
   "scripts": {
-    "c1": "tsc -t es2022 -m es2022 --moduleResolution node --outDir dist/challenge-1 challenge-1/runner.ts && node dist/challenge-1/runner",
+    "clean": "rm -rf dist",
+    "compile": "tsc -p tsconfig.json",
+    "format": "prettier --write \"**/*.ts\"",
+    "build": "npm run clean && npm run format && npm run compile",
+    "start:c1": "node dist/challenge-1/runner.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
