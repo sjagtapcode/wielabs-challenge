@@ -1,4 +1,4 @@
-import { processDataDump } from "./challenge";
+import { processDataDump } from "./challenge.js";
 
 /**
  * This is the entry point for the challenge.

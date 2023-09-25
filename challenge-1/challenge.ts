@@ -5,7 +5,5 @@
  * functions!
  */
 export async function processDataDump() {
-  /**
-   * Put your code here!
-   */
+  console.log('Processing Data Dump');
 }
