@@ -1,9 +1,21 @@
-/**
- * The entry point function. This will download the given dump file, extract/decompress it,
- * parse the CSVs within, and add the data to a SQLite database.
- * This is the core function you'll need to edit, though you're encouraged to make helper
- * functions!
- */
+import { logger } from './helpers/logger.js';
+import { downloader } from './helpers/downloader.js';
+
+const url = 'https://wielabs-task.s3.ap-south-1.amazonaws.com/dump.tar.gz';
+const tempDirPath = './tmp';
+const tempFileName = 'dump.tar.gz';
+const extractedDir = './tmp/extracted';
+
 export async function processDataDump() {
-  console.log('Processing Data Dump');
+  logger('Processing Data Dump');
+  try {
+    const isFilePresent = await downloader(url, tempDirPath, tempFileName)
+    if(!isFilePresent) {
+      logger('Downloading failed!')
+      return;
+    }
+
+  } catch (err) {
+    logger(err);
+  }
 }
