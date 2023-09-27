@@ -1,18 +1,23 @@
 import fs from 'fs-extra';
 import axios from 'axios';
-import { logger } from './logger.js';
+import { logger } from './logger';
 
 // downloder = downloads any file from external link and stores at given location in file system
 /*
  * url: external file path
  * folder: path to download the file
  * name: downloaded file name
-*/
-export const downloader = async (url: string, folder: string, tempFileName: string) => {
+ */
+export const downloader = async (
+  url: string,
+  folder: string,
+  tempFileName: string,
+) => {
   try {
-    const tempFilePath = `${folder}/${tempFileName}`
-    const fileExist = await fs.exists(tempFilePath)
-    if (fileExist) { // if file already exists do not download it
+    const tempFilePath = `${folder}/${tempFileName}`;
+    const fileExist = await fs.exists(tempFilePath);
+    if (fileExist) {
+      // if file already exists do not download it
       logger(`File Already exists at ${tempFilePath}`);
       return true;
     }
@@ -29,7 +34,7 @@ export const downloader = async (url: string, folder: string, tempFileName: stri
     logger(`File downloaded successfully at ${tempFilePath}`);
     return true;
   } catch (err) {
-    logger(err)
+    logger(err);
     return false;
   }
-}
+};

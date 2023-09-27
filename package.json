@@ -11,7 +11,7 @@
     "compile": "tsc -w -p tsconfig.json",
     "format": "prettier --write \"**/*.ts\"",
     "build": "npm run clean && npm run format && npm run compile",
-    "start:c1": "node dist/challenge-1/runner.js",
+    "start:c1": "npx tsx ./challenge-1/runner.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
