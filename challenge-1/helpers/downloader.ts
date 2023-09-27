@@ -12,7 +12,10 @@ export const downloader = async (url: string, folder: string, tempFileName: stri
   try {
     const tempFilePath = `${folder}/${tempFileName}`
     const fileExist = await fs.exists(tempFilePath)
-    if (fileExist) return true; // if file already exists do not download it
+    if (fileExist) { // if file already exists do not download it
+      logger(`File Already exists at ${tempFilePath}`);
+      return true;
+    }
     await fs.ensureDir(folder);
 
     // Download the tar.gz file
@@ -23,6 +26,7 @@ export const downloader = async (url: string, folder: string, tempFileName: stri
       writeStream.on('finish', resolve);
       writeStream.on('error', reject);
     });
+    logger(`File downloaded successfully at ${tempFilePath}`);
     return true;
   } catch (err) {
     logger(err)
