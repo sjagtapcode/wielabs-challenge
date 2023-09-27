@@ -10,8 +10,9 @@ import { logger } from './logger.js';
 */
 export const downloader = async (url: string, folder: string, tempFileName: string) => {
   try {
-    const tempFilePath = folder + tempFileName
-    if (await fs.exists(tempFilePath)) return true; // if file already exists do not download it
+    const tempFilePath = `${folder}/${tempFileName}`
+    const fileExist = await fs.exists(tempFilePath)
+    if (fileExist) return true; // if file already exists do not download it
     await fs.ensureDir(folder);
 
     // Download the tar.gz file
