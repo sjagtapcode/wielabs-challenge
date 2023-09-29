@@ -16,10 +16,10 @@ export const developmentConfig = {
 
 /* Performs Migrations on the Database
  * returns true on success else returns false
-*/
+ */
 export const dbMigration = async () => {
   try {
-    const db = knex(developmentConfig)
+    const db = knex(developmentConfig);
     try {
       await fs.ensureDir('./out');
       logger('Migrating database.');
@@ -36,4 +36,4 @@ export const dbMigration = async () => {
     logger(err);
     return false;
   }
-}
+};

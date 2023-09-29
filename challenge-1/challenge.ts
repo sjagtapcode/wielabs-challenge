@@ -29,7 +29,6 @@ export async function processDataDump() {
       logger('DB Migration Failed');
       return;
     }
-
   } catch (err) {
     logger(err);
   }
