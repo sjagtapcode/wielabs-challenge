@@ -12,6 +12,7 @@
     "format": "prettier --write \"**/*.ts\"",
     "build": "npm run clean && npm run format && npm run compile",
     "start:c1": "npx tsx ./challenge-1/runner.ts",
+    "db:migrate": "npx knex migrate:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.2",
+    "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.198",
     "@types/node": "^20.5.9",
     "@types/papaparse": "^5.3.8",
