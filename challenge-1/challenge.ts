@@ -1,6 +1,7 @@
 import { logger } from './helpers/logger';
 import { downloader } from './helpers/downloader';
 import { unzip } from './helpers/unzip';
+import { dbMigration } from './helpers/dbConnection';
 
 const url = 'https://wielabs-task.s3.ap-south-1.amazonaws.com/dump.tar.gz';
 const tempDirPath = './tmp';
@@ -22,6 +23,13 @@ export async function processDataDump() {
       logger('Unzipping failed');
       return;
     }
+
+    const isDBConnected = await dbMigration();
+    if (!isDBConnected) {
+      logger('DB Migration Failed');
+      return;
+    }
+
   } catch (err) {
     logger(err);
   }
