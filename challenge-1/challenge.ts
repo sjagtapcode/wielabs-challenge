@@ -1,7 +1,7 @@
 import { logger } from './helpers/logger';
 import { downloader } from './helpers/downloader';
 import { unzip } from './helpers/unzip';
-import { dbMigration } from './helpers/dbConnection';
+import { dbMigration } from './helpers/db';
 
 const url = 'https://wielabs-task.s3.ap-south-1.amazonaws.com/dump.tar.gz';
 const tempDirPath = './tmp';
