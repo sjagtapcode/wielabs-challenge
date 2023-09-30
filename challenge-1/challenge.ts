@@ -3,19 +3,12 @@ import { downloader } from './helpers/downloader';
 import { unzip } from './helpers/unzip';
 import { dbMigration } from './helpers/db';
 import { seed } from './helpers/seed';
-
-const url = 'https://wielabs-task.s3.ap-south-1.amazonaws.com/dump.tar.gz';
-const tempDirPath = './tmp';
-const tempFileName = 'dump.tar.gz';
-const tempFilePath = `${tempDirPath}/${tempFileName}`;
-const extractedDir = './tmp';
-const organizationsCsvFilePath = './tmp/dump/organizations.csv';
-const customersCsvFilePath = './tmp/dump/customers.csv';
+import { zipUrl, tempDirPath, tempFileName, tempFilePath, extractedDir, organizationsCsvFilePath, TABLES, customersCsvFilePath } from './constants';
 
 export async function processDataDump() {
   logger('Processing Data Dump');
   try {
-    const isFilePresent = await downloader(url, tempDirPath, tempFileName);
+    const isFilePresent = await downloader(zipUrl, tempDirPath, tempFileName);
     if (!isFilePresent) {
       logger('Downloading failed!');
       return;
@@ -33,10 +26,14 @@ export async function processDataDump() {
       return;
     }
 
-    const isSeedingComplete = await seed(customersCsvFilePath, organizationsCsvFilePath);
-    if (!isSeedingComplete) {
-      logger('Data Seeding Failed');
-      return;
+    const isCustomersSeedingComplete = await seed(customersCsvFilePath, TABLES.CUSTOMERS);
+    if (!isCustomersSeedingComplete) {
+      logger('Customers Data Seeding Failed');
+    }
+
+    const isOrganizationSeedingComplete = await seed(organizationsCsvFilePath, TABLES.ORGANIZATIONS);
+    if (!isOrganizationSeedingComplete) {
+      logger('Organization Data Seeding Failed');
     }
   } catch (err) {
     logger(err);

@@ -6,7 +6,7 @@ exports.up = function(knex) {
   return knex.schema.createTable('organizations', t => {
     t.increments('Index');
     t.string('Organization Id').unique().index();
-    t.string('Name').unique().index();
+    t.string('Name');
     t.text('Website');
     t.string('Country');
     t.text('Description');
