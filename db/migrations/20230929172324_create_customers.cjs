@@ -10,6 +10,7 @@ exports.up = function(knex) {
     t.string('First Name');
     t.string('Last Name');
     t.string('Company');
+    t.string('Country');
     t.string('City');
     t.string('Phone 1');
     t.string('Phone 2');
