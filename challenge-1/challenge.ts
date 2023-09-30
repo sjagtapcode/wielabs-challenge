@@ -1,8 +1,8 @@
-import { logger } from './helpers/logger';
-import { downloader } from './helpers/downloader';
-import { unzip } from './helpers/unzip';
-import { dbMigration } from './helpers/db';
-import { seed } from './helpers/seed';
+import { logger } from '../helpers/logger';
+import { downloader } from '../helpers/downloader';
+import { unzip } from '../helpers/unzip';
+import { dbMigration } from '../helpers/db';
+import { seed } from '../helpers/seed';
 import {
   zipUrl,
   tempDirPath,

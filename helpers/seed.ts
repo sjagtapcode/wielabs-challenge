@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import { developmentConfig } from './db';
 import { logger } from './logger';
 import * as csv from 'fast-csv';
-import { BATCH_SIZE, IRowData, TABLES } from '../constants';
+import { BATCH_SIZE, IRowData, TABLES } from '../challenge-1/constants';
 
 export const seed = async (csvFilePath: string, tableName: TABLES) => {
   const db = knex(developmentConfig);
