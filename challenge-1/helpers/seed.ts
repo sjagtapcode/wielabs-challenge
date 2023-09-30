@@ -1,15 +1,15 @@
-import knex from "knex";
+import knex from 'knex';
 import fs from 'fs-extra';
-import { developmentConfig } from "./db";
-import { logger } from "./logger";
+import { developmentConfig } from './db';
+import { logger } from './logger';
 import * as csv from 'fast-csv';
-import { BATCH_SIZE, IRowData, TABLES } from "../constants";
+import { BATCH_SIZE, IRowData, TABLES } from '../constants';
 
 export const seed = async (csvFilePath: string, tableName: TABLES) => {
   const db = knex(developmentConfig);
   try {
-    logger('Database connected Successfully!')
-    const fileStream = fs.createReadStream(csvFilePath)
+    logger('Database connected Successfully!');
+    const fileStream = fs.createReadStream(csvFilePath);
     const csvStream = csv.parseStream(fileStream, {
       headers: true,
     });
@@ -19,9 +19,9 @@ export const seed = async (csvFilePath: string, tableName: TABLES) => {
       csvStream.on('data', async function (row) {
         try {
           rows.push(row);
-          if(rows.length === BATCH_SIZE) {
-            await db(tableName).insert(rows)
-            logger(`Batch number ${batch} Completed`)
+          if (rows.length === BATCH_SIZE) {
+            await db(tableName).insert(rows);
+            logger(`Batch number ${batch} Completed`);
             rows = [];
           }
         } catch (err) {
@@ -29,20 +29,22 @@ export const seed = async (csvFilePath: string, tableName: TABLES) => {
           reject(0);
           csvStream.destroy();
         }
-      })
+      });
       csvStream.on('end', (rowCount: number) => {
-        logger(`${rowCount}+ ${tableName} added to the database`)
+        logger(`${rowCount}+ ${tableName} added to the database`);
         resolve(1);
         csvStream.destroy();
-      })
+      });
       csvStream.on('error', (err) => {
-        logger(`Something went wrong while adding ${tableName} data to the database`)
-        logger(err)
+        logger(
+          `Something went wrong while adding ${tableName} data to the database`,
+        );
+        logger(err);
         reject(0);
         csvStream.destroy();
-      })
-    })
-    logger('Seed Complete!')
+      });
+    });
+    logger('Seed Complete!');
 
     return true;
   } catch (err) {
