@@ -14,14 +14,13 @@ export const seed = async (csvFilePath: string, tableName: TABLES) => {
       headers: true,
     });
     let rows: IRowData<typeof tableName>[] = [];
-    let batch = 1;
+    logger(`Now Adding ${tableName} to the database...`);
     await new Promise((resolve, reject) => {
       csvStream.on('data', async function (row) {
         try {
           rows.push(row);
           if (rows.length === BATCH_SIZE) {
             await db(tableName).insert(rows);
-            logger(`Batch number ${batch} Completed`);
             rows = [];
           }
         } catch (err) {
@@ -30,8 +29,8 @@ export const seed = async (csvFilePath: string, tableName: TABLES) => {
           csvStream.destroy();
         }
       });
-      csvStream.on('end', (rowCount: number) => {
-        logger(`${rowCount}+ ${tableName} added to the database`);
+      csvStream.on('end', () => {
+        logger(`${tableName} added to the database`);
         resolve(1);
         csvStream.destroy();
       });
