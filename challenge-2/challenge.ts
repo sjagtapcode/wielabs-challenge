@@ -14,8 +14,12 @@ export async function processCompanyList() {
     const companies = await getDataFromCSV(csvFilePath);
     const jsonData = await webScrap(companies?.map(({ ycUrl }) => ycUrl));
 
+    logger('Done with web scrapping');
+
     await fs.ensureDir('./out');
     await fs.writeJson('./out/scraped.json', jsonData);
+
+    logger('Stored data to ./out/scraped.json');
   } catch (err) {
     logger(err);
   }
